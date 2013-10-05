@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="lib/codemirror.js"></script>
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/geovanni.css" />
+        <link rel="stylesheet" href="css/tree.css">
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <link rel="stylesheet" href="addon/hint/show-hint.css">
+        <link rel="stylesheet" href="theme/ambiance_g.css">
+        <script src="mode/javascript/javascript.js"></script>
+        <script src="addon/selection/active-line.js"></script>
+        <script src="addon/edit/matchbrackets.js"></script>
+        <script src="addon/hint/show-hint.js"></script>
+        <script src="addon/hint/javascript-hint.js"></script>
+        <script src="addon/fold/foldcode.js"></script>
+        <script src="addon/fold/foldgutter.js"></script>
+        <script src="addon/fold/brace-fold.js"></script>
+        <script src="addon/fold/xml-fold.js"></script>
+        <script src="addon/fold/comment-fold.js"></script>
+        <script src="addon/tern/tern.js"></script>
+        <script>
+            var myCodeMirror;
+            function start(){
+                myCodeMirror = CodeMirror(document.body,
+                {
+                    value: "function myScript(){\nreturn 100;\n}",
+                    mode:  "javascript",
+                    lineNumbers: true,
+                    extraKeys: {
+                        "Ctrl-Space": "autocomplete",
+                        "Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }
+                    },
+                    styleActiveLine: true,
+                    matchBrackets: true,
+                    theme:"ambiance",
+                    foldGutter: true,
+                    lineWrapping: true,
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+                });
+                CodeMirror.commands.autocomplete = function(cm) {
+                    CodeMirror.showHint(cm, CodeMirror.hint.javascript);
+                };
+            }
+        </script>
+        <style>
+            .CodeMirror {
+                position: fixed;
+                top: 0;
+                left: 200px;
+                right: 0;
+                bottom: 0;
+                height: auto;
+                z-index: -9;
+                font-size:12pt;
+            }
+            .CodeMirror-foldmarker {
+                color: #696969;
+                font-family: arial;
+                cursor: pointer;
+            }
+            .CodeMirror-foldgutter {
+                width: .8em;
+            }
+            .CodeMirror-foldgutter-open,
+            .CodeMirror-foldgutter-folded {
+                color: #696969;
+                cursor: pointer;
+            }
+            .CodeMirror-foldgutter-open:after {
+                content: "\25BE";
+            }
+            .CodeMirror-foldgutter-folded:after {
+                content: "\25B8";
+            }
+        </style>
+    </head>
+    <body onload="start()">
+        <ul class='tree-js'>
+            <li><div>Level 1</div></li>
+            <li><div>Level 1</div>
+                <ul>
+                    <li><div>Level 2</div></li>
+                    <li><div>Level 2</div>
+                        <ul>
+                            <li><div>Level 3</div></li>
+                            <li><div>Level 3</div></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><div>Level 1</div></li>
+        </ul>
+    </body>
+</html>
