@@ -2,12 +2,8 @@
 <html>
     <head>
         <script src="lib/codemirror.js"></script>
-        <link rel="stylesheet" href="css/reset.css" />
-        <link rel="stylesheet" href="css/geovanni.css" />
-        <link rel="stylesheet" href="css/tree.css">
-        <link rel="stylesheet" href="lib/codemirror.css">
-        <link rel="stylesheet" href="addon/hint/show-hint.css">
-        <link rel="stylesheet" href="theme/ambiance_g.css">
+        <script src="lib/include-min.js"></script>
+        <script src="mode/meta.js"></script>
         <script src="mode/javascript/javascript.js"></script>
         <script src="addon/selection/active-line.js"></script>
         <script src="addon/edit/matchbrackets.js"></script>
@@ -21,15 +17,43 @@
         <script src="addon/tern/tern.js"></script>
         <script>
             var myCodeMirror;
+            function showLanguages(){
+                document.getElementById("cc-languages").className = document.getElementById("cc-languages").className=="disable"?"enable":"disable";
+            }
+            function showIndent(){
+                document.getElementById("cc-indent").className = document.getElementById("cc-indent").className=="disable"?"enable":"disable";
+            }
+            function setLanguage(l,l2){
+                console.log();
+                document.getElementsByClassName("cc-language")[0].getElementsByTagName("p")[0].innerHTML = l2;
+                myCodeMirror.setOption("mode", l);
+                myCodeMirror.refresh()
+            }
+            function json(link,func){
+                var xmlhttp;
+                if (window.XMLHttpRequest){
+                    xmlhttp=new XMLHttpRequest();
+                }else{
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange=function(){
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        func(JSON.parse(xmlhttp.responseText));
+                    }
+                }
+                xmlhttp.open("GET",link,true);
+                xmlhttp.send();
+            }
             function start(){
                 myCodeMirror = CodeMirror(document.body,
                 {
                     value: "function myScript(){\nreturn 100;\n}",
-                    mode:  "javascript",
+                    mode:  "none",
                     lineNumbers: true,
                     extraKeys: {
                         "Ctrl-Space": "autocomplete",
-                        "Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }
+                        "Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },
+                        "Ctrl-J": function(cm){ cm.indentLine(1); }
                     },
                     styleActiveLine: true,
                     matchBrackets: true,
@@ -38,58 +62,61 @@
                     lineWrapping: true,
                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
                 });
+                myCodeMirror.focus();
                 CodeMirror.commands.autocomplete = function(cm) {
                     CodeMirror.showHint(cm, CodeMirror.hint.javascript);
                 };
+                for(var i=0;i<CodeMirror.modeInfo.length;i++){
+                    document.getElementById("cc-languages").innerHTML+="<li onclick='setLanguage(\""+CodeMirror.modeInfo[i].mime+"\",\""+CodeMirror.modeInfo[i].name+"\")'>"+CodeMirror.modeInfo[i].name+"</li>";
+                }
             }
         </script>
-        <style>
-            .CodeMirror {
-                position: fixed;
-                top: 0;
-                left: 200px;
-                right: 0;
-                bottom: 0;
-                height: auto;
-                z-index: -9;
-                font-size:12pt;
-            }
-            .CodeMirror-foldmarker {
-                color: #696969;
-                font-family: arial;
-                cursor: pointer;
-            }
-            .CodeMirror-foldgutter {
-                width: .8em;
-            }
-            .CodeMirror-foldgutter-open,
-            .CodeMirror-foldgutter-folded {
-                color: #696969;
-                cursor: pointer;
-            }
-            .CodeMirror-foldgutter-open:after {
-                content: "\25BE";
-            }
-            .CodeMirror-foldgutter-folded:after {
-                content: "\25B8";
-            }
-        </style>
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/geovanni.css" />
+        <link rel="stylesheet" href="css/tree.css">
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <link rel="stylesheet" href="addon/hint/show-hint.css">
+        <link rel="stylesheet" href="theme/ambiance_g.css">
+        <link rel="stylesheet" href="css/global.css">
     </head>
     <body onload="start()">
-        <ul class='tree-js'>
-            <li><div>Level 1</div></li>
-            <li><div>Level 1</div>
-                <ul>
-                    <li><div>Level 2</div></li>
-                    <li><div>Level 2</div>
-                        <ul>
-                            <li><div>Level 3</div></li>
-                            <li><div>Level 3</div></li>
-                        </ul>
-                    </li>
+        <div id='code-config'>
+            <span class='cc-language cc-cf'>
+                <p onclick="showLanguages()">Plain Text</p>
+                <ul id='cc-languages' class="disable">
                 </ul>
-            </li>
-            <li><div>Level 1</div></li>
-        </ul>
+            </span>
+            <span class='cc-indnet cc-cf'>
+                <p onclick="showIndent()">4 spaces</p>
+                <ul id='cc-indent' class="disable">
+                    <li onclick="setIndent(1,this.input)"><input type="number"> Spaces</li>
+                    <li onclick="setIndent(2,this.input)"><input type="number"> Tabs</li>
+                </ul>
+            </span>
+        </div>
+        <div id='archive-menu'>
+            <span class='selectProject'>
+                <p>Projeto Selecionado</p>
+                <ul class='projects'>
+                    <li>Projeto 1</li>
+                    <li>Projeto 2</li>
+                </ul>
+            </span>
+            <ul class='tree-js'>
+                <li><div>Level 1</div></li>
+                <li><div>Level 1</div>
+                    <ul>
+                        <li><div>Level 2</div></li>
+                        <li><div>Level 2</div>
+                            <ul>
+                                <li><div>Level 3333333333333333333333333333333333333</div></li>
+                                <li><div>Level 3</div></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><div>Level 1</div></li>
+            </ul>
+        </div>
     </body>
 </html>

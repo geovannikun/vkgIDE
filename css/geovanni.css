@@ -1,6 +1,8 @@
 html,body{
     min-height: 100%;
     width: 100%;
+    font-family:arial;
+    -webkit-font-smoothing: antialiased;
 }
 
 body *{
@@ -20,20 +22,20 @@ body *{
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track-piece {
-  background-color: #f3f3f3;
+    background-color: #f3f3f3;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-  background-color: #696969;
+    background-color: #ACACAC;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-  background-color: #696969;
+    background-color: #ACACAC;
 }
 
 input{
