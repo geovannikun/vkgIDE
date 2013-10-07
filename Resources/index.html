@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="lib/codemirror.js"></script>
+        <script src="mode/meta.js"></script>
+        <script src="addon/selection/active-line.js"></script>
+        <script src="addon/edit/matchbrackets.js"></script>
+        <script src="addon/hint/show-hint.js"></script>
+        <script src="addon/hint/javascript-hint.js"></script>
+        <script src="addon/fold/foldcode.js"></script>
+        <script src="addon/fold/foldgutter.js"></script>
+        <script src="addon/fold/brace-fold.js"></script>
+        <script src="addon/fold/xml-fold.js"></script>
+        <script src="addon/fold/comment-fold.js"></script>
+        <script src="addon/tern/tern.js"></script>
+        <script>
+            var myCodeMirror;
+            function include(url,callback){
+                var head = document.getElementsByTagName('head')[0];
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = url;
+                script.onreadystatechange = callback;
+                script.onload = callback;
+                head.appendChild(script);
+            }
+            function betterTab(cm) {
+                if (cm.somethingSelected()) {
+                    cm.indentSelection("add");
+                } else {
+                    cm.replaceSelection(cm.getOption("indentWithTabs")? "\t":
+                    Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+                }
+            }
+            function disablePopups(){
+                ul = document.querySelectorAll(".cc-cf > ul");
+                for(var i = 0;i<ul.length;i++){
+                    ul[i].className = "disable";
+                }
+            }
+            function showLanguages(){
+                document.getElementById("cc-languages").className = document.getElementById("cc-languages").className=="disable"?"enable":"disable";
+            }
+            function showIndent(){
+                document.getElementById("cc-indent").className = document.getElementById("cc-indent").className=="disable"?"enable":"disable";
+            }
+            function newProject(){
+                Ti.Filesystem.getFile(Ti.Filesystem.getUserDirectory());
+            }
+            function setIndent(){
+                numberField = document.querySelector("#cc-indent > li > input[type='text']");
+                if(!/^[0-9]+$/.test(numberField.value)){
+                    numberField.value = "";
+                }
+                var number = numberField.value==""?0:numberField.value;
+                var isTab = document.querySelector("#cc-indent > li > input:checked").value=="tab";
+                myCodeMirror.setOption("tabSize", number);
+                myCodeMirror.setOption("indentUnit", number);
+                myCodeMirror.setOption("indentWithTabs", isTab);
+                document.querySelector(".cc-indent > p").innerHTML = number+" "+(isTab?"Tabs":"Spaces");
+                myCodeMirror.refresh();
+            }
+            function setLanguage(l,l2){
+                disablePopups();
+                include("mode/"+l+"/"+l+".js",function(){
+                    document.getElementsByClassName("cc-language")[0].getElementsByTagName("p")[0].innerHTML = l2;
+                    myCodeMirror.setOption("mode", l);
+                    myCodeMirror.refresh();
+                });
+            }
+            function setWrap(){
+                myCodeMirror.setOption("lineWrapping", !myCodeMirror.getOption("lineWrapping"));
+                document.querySelector(".cc-wrap > p").innerHTML = myCodeMirror.getOption("lineWrapping")?"Wrap":"No Wrap";
+            }
+            function start(){
+                myCodeMirror = CodeMirror(document.body,
+                {
+                    value: "function myScript(){\nreturn 100;\n}",
+                    mode:  "none",
+                    lineNumbers: true,
+                    extraKeys: {
+                        "Ctrl-Space": "autocomplete",
+                        "Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },
+                        "Ctrl-J": function(cm){ cm.indentLine(1); },
+                        Tab: betterTab
+                    },
+                    styleActiveLine: true,
+                    matchBrackets: true,
+                    theme:"ambiance",
+                    foldGutter: true,
+                    lineWrapping: true,
+                    indentWithTabs: false,
+                    indentUnit: 4,
+                    tabSize: 4,
+                    lineWrapping:false,
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+                });
+                myCodeMirror.focus();
+                myCodeMirror.on("focus",disablePopups);
+                CodeMirror.commands.autocomplete = function(cm) {
+                    CodeMirror.showHint(cm, CodeMirror.hint.javascript);
+                };
+                for(var i=0;i<CodeMirror.modeInfo.length;i++){
+                    document.getElementById("cc-languages").innerHTML+="<li onclick='setLanguage(\""+CodeMirror.modeInfo[i].mode+"\",\""+CodeMirror.modeInfo[i].name+"\")'>"+CodeMirror.modeInfo[i].name+"</li>";
+                }
+            }
+        </script>
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/geovanni.css" />
+        <link rel="stylesheet" href="css/tree.css">
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <link rel="stylesheet" href="addon/hint/show-hint.css">
+        <link rel="stylesheet" href="theme/ambiance_g.css">
+        <link rel="stylesheet" href="css/global.css">
+    </head>
+    <body onload="start()">
+        <div id='open-folder' style="display:none">
+            <p>/home/geovanni/</p>
+            <ul>
+                <li>Folder 1</li>
+                <li>Folder 2</li>
+            </ul>
+        </div>
+        <div id='code-config'>
+            <span class='cc-language cc-cf'>
+                <p onclick="showLanguages()">Plain Text</p>
+                <ul id='cc-languages' class="disable">
+                </ul>
+            </span>
+            <span class='cc-indent cc-cf'>
+                <p onclick="showIndent()">4 Spaces</p>
+                <ul id='cc-indent' class="disable">
+                    <li onclick="setIndent()">Size <input onkeyup="setIndent()" type="text" value="4"></li>
+                    <li onclick="setIndent()"><input id='tab' type="radio" name="indent" value="tab"><label for="tab">Tab</label><input id='space' type="radio" name="indent" value="space" checked><label for="space">Space</label></li>
+                </ul>   
+            </span>
+            <span class='cc-wrap cc-cf'>
+                <p onclick="setWrap()">No Wrap</p>
+            </span>
+        </div>
+        <div id='archive-menu'>
+            <span class='selectProject'>
+                <p>Projeto Selecionado</p>
+                <ul class='projects'>
+                    <li class="newProject" onclick="newProject()">New Project...</li>
+                    <li>Projeto 1</li>
+                    <li>Projeto 2</li>
+                </ul>
+            </span>
+            <ul class='tree-js'>
+                <li><div>Level 1</div></li>
+                <li><div>Level 1</div>
+                    <ul>
+                        <li><div>Level 2</div></li>
+                        <li><div>Level 2</div>
+                            <ul>
+                                <li><div>Level 3333333333333333333333333333333333333</div></li>
+                                <li><div>Level 3</div></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><div>Level 1</div></li>
+            </ul>
+        </div>
+    </body>
+</html>
