@@ -13,6 +13,8 @@
         <script src="addon/fold/xml-fold.js"></script>
         <script src="addon/fold/comment-fold.js"></script>
         <script src="addon/tern/tern.js"></script>
+        <script src="addon/format/autoFormatAll.js"></script>
+        <script src="addon/format/formatting.js"></script>
         <script>
             var myCodeMirror;
             function include(url,callback){
@@ -81,7 +83,15 @@
                     extraKeys: {
                         "Ctrl-Space": "autocomplete",
                         "Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },
-                        "Ctrl-J": function(cm){ cm.indentLine(1); },
+                        "Ctrl-J": function(cm){ 
+                            cm.autoFormatAll({
+                                line: 0,
+                                ch: 0
+                            }, {
+                                line: cm.lineCount(),
+                                ch: 0
+                            }); 
+                        },
                         Tab: betterTab
                     },
                     styleActiveLine: true,

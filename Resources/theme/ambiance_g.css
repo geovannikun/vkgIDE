@@ -2,6 +2,13 @@
 
 /* Color scheme */
 
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(http://themes.googleusercontent.com/static/fonts/ubuntumono/v3/ViZhet7Ak-LRXZMXzuAfkYbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
 .cm-s-ambiance span.cm-meta {color: #FF1717;}
 .cm-s-ambiance span.cm-keyword {font-weight: bold; color: #7F0055; }
 .cm-s-ambiance span.cm-atom {color: #219;}
@@ -36,9 +43,11 @@
 /* Editor styling */
 
 .cm-s-ambiance.CodeMirror {
-  font-family: Monaco, Menlo,"Andale Mono","lucida console","Courier New",monospace !important;
-  color: #696969;
-  background-color: #f3f3f3;
+    font-family: "Ubuntu Mono", monospace !important;
+    font-size:13pt;
+    line-height: 2em;
+    color: #696969;
+    background-color: #f3f3f3;
 }
 
 .cm-s-ambiance .CodeMirror-gutters {
