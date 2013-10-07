@@ -5,6 +5,7 @@
         <script src="mode/meta.js"></script>
         <script src="addon/selection/active-line.js"></script>
         <script src="addon/edit/matchbrackets.js"></script>
+        <script src="addon/edit/trailingspace.js"></script>
         <script src="addon/hint/show-hint.js"></script>
         <script src="addon/hint/javascript-hint.js"></script>
         <script src="addon/fold/foldcode.js"></script>
@@ -103,6 +104,7 @@
                     indentUnit: 4,
                     tabSize: 4,
                     lineWrapping:false,
+                    showTrailingSpace: true,
                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
                 });
                 myCodeMirror.focus();
