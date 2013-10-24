@@ -21,6 +21,7 @@
         <script>
             var myCodeMirror;
             var projects = [];
+            var fileOpened;
             function include(url,callback){
                 var head = document.getElementsByTagName('head')[0];
                 var script = document.createElement('script');
@@ -68,10 +69,16 @@
                     folder = folders[0];
                     console.log(folder);
                     if (err) throw err;
-                    project = new Project();
+                    project = new Project(folder);
                     project.name = folder;
-                    project.path = folder;
-                    console.log(project.getFiles());
+                    project.folders.forEach(function(f){
+                        console.log(f);
+                        document.getElementById("archives").innerHTML += "<li><div>"+f+"</div></li>";
+                    });
+                    project.files.forEach(function(f){
+                        console.log(f);
+                        document.getElementById("archives").innerHTML += "<li><div>"+f.name+"</div></li>"
+                    });
                 });
             }
             function setIndent(){
@@ -103,7 +110,7 @@
                 myCodeMirror.setOption("lineWrapping", !myCodeMirror.getOption("lineWrapping"));
                 document.querySelector(".cc-wrap > p").innerHTML = myCodeMirror.getOption("lineWrapping")?"Wrap":"No Wrap";
             }
-            function openFile(cm){
+            function selectFile(cm){
                 window.frame.openDialog({
                     type : 'open',
                     title : 'Open file',
@@ -112,16 +119,21 @@
                 }, function (err, files) {
                     if (!err) {
                         console.log(fs);
-                        
-                        fs.readFile(files[0], 'UTF8', function (err, data) {
-                            cm.setValue(data);
-                            myCodeMirror.setOption("mode", mime.lookup(files[0]));
-                            myCodeMirror.refresh();
-                        });
+                        var f = new File(files[0]);
+                        cm.setValue(f.load());
+                        myCodeMirror.setOption("mode", f.mimetype);
+                        myCodeMirror.refresh();
+                        fileOpened = f;
                     } else {
                         console.log(err);
                     }
                 });
+            }
+            function openFile(dir){
+            }
+            function saveFile(cm){
+                fileOpened.save(cm.getValue());
+                console.log("saved");
             }
             function upFontSize(){
                 size = document.querySelector(".CodeMirror").style.fontSize;
@@ -153,7 +165,8 @@
                                 ch: 0
                             }); 
                         },
-                        "Ctrl-O": openFile,
+                        "Ctrl-O": selectFile,
+                        "Ctrl-S": saveFile,
                         Tab: betterTab
                     },
                     styleActiveLine: true,
@@ -229,20 +242,7 @@
                     <li>Projeto 2</li>
                 </ul>
             </span>
-            <ul class='tree-js'>
-                <li><div>Level 1</div></li>
-                <li><div>Level 1</div>
-                    <ul>
-                        <li><div>Level 2</div></li>
-                        <li><div>Level 2</div>
-                            <ul>
-                                <li><div>Level 3333333333333333333333333333333333333</div></li>
-                                <li><div>Level 3</div></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><div>Level 1</div></li>
+            <ul id='archives' class='tree-js'>
             </ul>
         </div>
         <!--<iframe id="preview"></iframe>-->

@@ -1,48 +1,45 @@
-function Project(){
+function Project(path){
     this.name;
-    this.path;
+    this.path = path;
     this.type;
-    this.getFolders = function(){
-        var folders = [];
-        var path = this.path;
-        var list = fs.readdirSync(path);
-        list.forEach(function(file) {
-            file = path + '/' + file;
-            var stat = fs.statSync(file);
-            if (stat && stat.isDirectory()) folders.push(file);
-        });
-        return folders;
-    }
-    this.getFiles = function(){
-        var files = [];
-        var path = this.path;
-        var list = fs.readdirSync(path);
-        list.forEach(function(file) {
-            file2 = path + '/' + file;
-            var stat = fs.statSync(file2);
-            var f = new File(file, file2, mime.lookup(file2));
-            if (stat && !stat.isDirectory()) files.push(f);
-        });
-        return files;
-    }
+    this.folders = [];
+    this.files = [];
+    var list = fs.readdirSync(this.path);
+    var path = this.path;
+    var folders = [];
+    var files = [];
+    list.forEach(function(file) {
+        var file = path + '/' + file;
+        var stat = fs.statSync(file);
+        if (stat && stat.isDirectory()){
+            folders.push("/"+file.slice(file.lastIndexOf('/')+1, file.length));
+        }else{
+            files.push(new File(file));
+        }
+    });
+    this.files = files;
+    this.folders = folders;
 }
 
-function File(name,path,mimetype){
-    this.name = name;
+function File(path){
+    this.name;
     this.path = path;
-    this.mimetype = mimetype;
+    this.mimetype = mime.lookup(this.path);
+    this.name = this.path.slice(this.path.lastIndexOf('/')+1, this.path.length);
+    var path = this.path;
     this.save = function(content){
-        var path = this.path;
         fs.writeFile(path, content, function(err) {
             if(err) {
                 return false;
             } else {
                 return true;
             }
-        }); 
+        });
     };
     this.load = function(){
-        var path = this.path;
-        fs.readFileSync(path);
+        return fs.readFileSync(path, "utf8");
     };
+}
+
+function Folder(){
 }
