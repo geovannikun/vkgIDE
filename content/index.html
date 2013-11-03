@@ -71,13 +71,14 @@
                     if (err) throw err;
                     project = new Project(folder);
                     project.name = folder;
+                    document.getElementById("archives").innerHTML = "";
                     project.folders.forEach(function(f){
                         console.log(f);
-                        document.getElementById("archives").innerHTML += "<li><div>"+f+"</div></li>";
+                        document.getElementById("archives").appendChild(f.getHTML());
                     });
                     project.files.forEach(function(f){
                         console.log(f);
-                        document.getElementById("archives").innerHTML += "<li><div>"+f.name+"</div></li>"
+                        document.getElementById("archives").appendChild(f.getHTML());
                     });
                 });
             }

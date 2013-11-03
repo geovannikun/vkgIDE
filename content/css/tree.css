@@ -1,30 +1,38 @@
 .tree-js{
     display:inline-block;
+    padding: 10px;
+    padding-top: 0px;
     z-index:9;
 }
 .tree-js li {
     list-style-type: none;
-    border-left: 2px solid #696969;
-    margin-left: 1em;
+    margin-left: 15px;
 }
 
-.tree-js li div {
-    padding-left: 1em;
-    position: relative;
+.tree-js > li{
+    margin-left: 0px;
 }
 
-.tree-js li div::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -2px;
-    bottom: 50%;
-    width: 0.75em;
-    border: 2px solid #696969;
-    border-top: 0 none transparent;
-    border-right: 0 none transparent;
+.tree-js li > input{
+    float:left;
+    width:15px;
+    height:15px;
+    -webkit-appearance: none;
+    border:0px solid black;
 }
 
-.tree-js ul > li:last-child {
-    border-left: 2px solid transparent;
+.tree-js li > input:checked + *{
+    display:none;
+}
+
+.tree-js li > input[type='checkbox']{
+    background: transparent url('../img/folder.png') no-repeat;
+    background-position:center center;
+    background-size: 100% 75%;
+}
+
+.tree-js li > input[type='radio']{
+    background: transparent url('../img/file.png') no-repeat;
+    background-position:center center;
+    background-size: 90% 100%;
 }
