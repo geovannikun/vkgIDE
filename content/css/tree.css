@@ -6,7 +6,8 @@
 }
 .tree-js li {
     list-style-type: none;
-    margin-left: 15px;
+    margin-left: 10px;
+    clear:both;
 }
 
 .tree-js > li{
@@ -16,19 +17,27 @@
 .tree-js li > input{
     float:left;
     width:15px;
-    height:15px;
+    height:10px;
     -webkit-appearance: none;
     border:0px solid black;
 }
 
-.tree-js li > input:checked + *{
+.tree-js li > input{
+    float:left;
+}
+
+.tree-js li > input + *{
     display:none;
+}
+
+.tree-js li > input:checked + *{
+    display:block;
 }
 
 .tree-js li > input[type='checkbox']{
     background: transparent url('../img/folder.png') no-repeat;
     background-position:center center;
-    background-size: 100% 75%;
+    background-size: 100% 100%;
 }
 
 .tree-js li > input[type='radio']{

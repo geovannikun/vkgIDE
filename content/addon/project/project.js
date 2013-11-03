@@ -41,9 +41,9 @@ function File(path){
         var list = document.createElement("li");
         var input = document.createElement("input");
         input.type = "radio";
-        input.id = this.name;
+        input.id = "fl-"+this.name;
         var label = document.createElement("label");
-        label.for = this.name;
+        label.htmlFor = "fl-"+this.name;
         label.innerHTML = this.name;
         list.appendChild(label);
         list.appendChild(input);
@@ -78,9 +78,9 @@ function Folder(path){
         var list = document.createElement("li");
         var input = document.createElement("input");
         input.type = "checkbox";
-        input.id = this.name;
+        input.id = "fld-"+this.name;
         var label = document.createElement("label");
-        label.for = this.name;
+        label.htmlFor = "fld-"+this.name;
         label.innerHTML = this.name;
         var filet = document.createElement("li");
         files.forEach(function(file){
