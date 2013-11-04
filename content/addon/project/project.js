@@ -22,20 +22,28 @@ function Project(path){
 }
 
 function File(path){
-    this.name;
     this.path = path;
     this.mimetype = mime.lookup(this.path);
     this.name = this.path.slice(this.path.lastIndexOf('/')+1, this.path.length);
-    this.save = function(content){
-        fs.writeFile(path, content, function(err) {
+    var self = this;
+    this.save = function(){
+        fs.writeFile(this.path, editor.getValue(), function(err) {
             return !err;
         });
     };
     this.load = function(){
-        return fs.readFileSync(path, "utf8");
+        fileOpened = self;
+        if(!self.document){
+            self.document = CodeMirror.Doc(fs.readFileSync(self.path, "utf8"), self.mimetype);
+        }
+        editor.swapDoc(self.document);
+        editor.setOption("mode", self.mimetype);
+        document.title = self.name + " - vkgIDE"
+        editor.refresh();
+        editor.focus();
     };
     this.toString = function(){
-        return name;
+        return this.name;
     }
     this.getHTML = function(){
         var list = document.createElement("li");
@@ -43,6 +51,7 @@ function File(path){
         input.type = "radio";
         input.id = "fl-"+this.name;
         var label = document.createElement("label");
+        label.onclick = this.load;
         label.htmlFor = "fl-"+this.name;
         label.innerHTML = this.name;
         list.appendChild(label);
@@ -57,22 +66,18 @@ function Folder(path){
     this.folders = [];
     this.files = [];
     var list = fs.readdirSync(this.path);
-    var path = this.path;
-    var folders = [];
-    var files = [];
+    var self = this;
     list.forEach(function(file) {
-        var file = path + '/' + file;
+        var file = self.path + '/' + file;
         var stat = fs.statSync(file);
         if (stat && stat.isDirectory()){
-            folders.push(new Folder(file));
+            self.folders.push(new Folder(file));
         }else{
-            files.push(new File(file));
+            self.files.push(new File(file));
         }
     });
-    this.files = files;
-    this.folders = folders;
     this.toString = function(){
-        return name;
+        return this.name;
     }
     this.getHTML = function(){
         var list = document.createElement("li");
@@ -83,10 +88,10 @@ function Folder(path){
         label.htmlFor = "fld-"+this.path+this.name;
         label.innerHTML = this.name;
         var filet = document.createElement("li");
-        files.forEach(function(file){
+        this.files.forEach(function(file){
             filet.appendChild(file.getHTML());
         });
-        folders.forEach(function(folder){
+        this.folders.forEach(function(folder){
             filet.appendChild(folder.getHTML());
         });
         list.appendChild(label);

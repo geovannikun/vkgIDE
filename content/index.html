@@ -19,7 +19,7 @@
         <script src="addon/format/formatting.js"></script>
         <script src="addon/project/project.js"></script>
         <script>
-            var myCodeMirror;
+            var editor;
             var projects = [];
             var fileOpened;
             function include(url,callback){
@@ -50,7 +50,7 @@
                 var previewFrame = document.getElementById('preview');
                 var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
                 preview.open();
-                preview.write(myCodeMirror.getValue());
+                preview.write(editor.getValue());
                 preview.close();
             }
             function showLanguages(){
@@ -90,11 +90,11 @@
                 }
                 var number = numberField.value==""?0:numberField.value;
                 var isTab = document.querySelector("#cc-indent > li > input:checked").value=="tab";
-                myCodeMirror.setOption("tabSize", number);
-                myCodeMirror.setOption("indentUnit", number);
-                myCodeMirror.setOption("indentWithTabs", isTab);
+                editor.setOption("tabSize", number);
+                editor.setOption("indentUnit", number);
+                editor.setOption("indentWithTabs", isTab);
                 document.querySelector(".cc-indent > p").innerHTML = number+" "+(isTab?"Tabs":"Spaces");
-                myCodeMirror.refresh();
+                editor.refresh();
             }
             function setLanguage(l){
                 disablePopups();
@@ -105,12 +105,12 @@
                     }
                 }
                 document.getElementsByClassName("cc-language")[0].getElementsByTagName("p")[0].innerHTML = name;
-                myCodeMirror.setOption("mode", l);
-                myCodeMirror.refresh();
+                editor.setOption("mode", l);
+                editor.refresh();
             }
             function setWrap(){
-                myCodeMirror.setOption("lineWrapping", !myCodeMirror.getOption("lineWrapping"));
-                document.querySelector(".cc-wrap > p").innerHTML = myCodeMirror.getOption("lineWrapping")?"Wrap":"No Wrap";
+                editor.setOption("lineWrapping", !editor.getOption("lineWrapping"));
+                document.querySelector(".cc-wrap > p").innerHTML = editor.getOption("lineWrapping")?"Wrap":"No Wrap";
             }
             function selectFile(cm){
                 window.frame.openDialog({
@@ -124,8 +124,8 @@
                         var f = new File(files[0]);
                         document.title = f.name + " - vkgIDE"
                         cm.setValue(f.load());
-                        myCodeMirror.setOption("mode", f.mimetype);
-                        myCodeMirror.refresh();
+                        editor.setOption("mode", f.mimetype);
+                        editor.refresh();
                         fileOpened = f;
                     } else {
                         console.log(err);
@@ -151,7 +151,7 @@
                 document.querySelector(".cc-fontSize > p").innerHTML = "Font: " + document.querySelector(".CodeMirror").style.fontSize;
             }
             function start(){
-                myCodeMirror = CodeMirror(document.body,
+                editor = CodeMirror(document.body,
                 {
                     value: "function myScript(){\nreturn 100;\n}",
                     mode:  "none",
@@ -184,9 +184,9 @@
                     showTrailingSpace: true,
                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
                 });
-                myCodeMirror.focus();
-                myCodeMirror.on("focus",disablePopups);
-                /*myCodeMirror.on("change",updatePreview);*/
+                editor.focus();
+                editor.on("focus",disablePopups);
+                /*editor.on("change",updatePreview);*/
                 CodeMirror.commands.autocomplete = function(cm) {
                     CodeMirror.showHint(cm, CodeMirror.hint.javascript);
                 };
