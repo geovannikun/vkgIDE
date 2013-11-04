@@ -66,20 +66,21 @@
                     multiSelect: false,
                     dirSelect : true
                 }, function (err, folders) {
-                    folder = folders[0];
-                    console.log(folder);
-                    if (err) throw err;
-                    project = new Project(folder);
-                    project.name = folder;
-                    document.getElementById("archives").innerHTML = "";
-                    project.folders.forEach(function(f){
-                        console.log(f);
-                        document.getElementById("archives").appendChild(f.getHTML());
-                    });
-                    project.files.forEach(function(f){
-                        console.log(f);
-                        document.getElementById("archives").appendChild(f.getHTML());
-                    });
+                    if(!err || folders.length!=0){
+                        folder = folders[0];
+                        console.log(folder);
+                        project = new Project(folder);
+                        project.name = folder;
+                        document.getElementById("archives").innerHTML = "";
+                        project.folders.forEach(function(f){
+                            console.log(f);
+                            document.getElementById("archives").appendChild(f.getHTML());
+                        });
+                        project.files.forEach(function(f){
+                            console.log(f);
+                            document.getElementById("archives").appendChild(f.getHTML());
+                        });
+                    }
                 });
             }
             function setIndent(){
@@ -121,6 +122,7 @@
                     if (!err) {
                         console.log(fs);
                         var f = new File(files[0]);
+                        document.title = f.name + " - vkgIDE"
                         cm.setValue(f.load());
                         myCodeMirror.setOption("mode", f.mimetype);
                         myCodeMirror.refresh();

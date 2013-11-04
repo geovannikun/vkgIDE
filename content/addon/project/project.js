@@ -78,9 +78,9 @@ function Folder(path){
         var list = document.createElement("li");
         var input = document.createElement("input");
         input.type = "checkbox";
-        input.id = "fld-"+this.name;
+        input.id = "fld-"+this.path+this.name;
         var label = document.createElement("label");
-        label.htmlFor = "fld-"+this.name;
+        label.htmlFor = "fld-"+this.path+this.name;
         label.innerHTML = this.name;
         var filet = document.createElement("li");
         files.forEach(function(file){
