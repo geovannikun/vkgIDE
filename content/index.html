@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>vkgIDE</title>
+        <script src="lib/jquery-2.0.3.min.js"></script>
+        <script src="lib/jquery.ddslick.min.js"></script>
         <script src="lib/codemirror.js"></script>
         <script src="mode/meta.js"></script>
         <script src="addon/selection/active-line.js"></script>
@@ -20,8 +22,31 @@
         <script src="addon/project/project.js"></script>
         <script>
             var editor;
-            var projects = [];
+            var projects;
             var fileOpened;
+            var ddData =    [
+                                {
+                                    text: "Python",
+                                    value: 1,
+                                    selected: false
+                                },
+                                {
+                                    text: "C++",
+                                    value: 2,
+                                    selected: false
+                                },
+                                {
+                                    text: "C",
+                                    value: 3,
+                                    selected: true
+                                },
+                                {
+                                    text: "WEB",
+                                    value: 4,
+                                    selected: false
+                                }
+                            ];
+
             function include(url,callback){
                 var head = document.getElementsByTagName('head')[0];
                 var script = document.createElement('script');
@@ -59,29 +84,28 @@
             function showIndent(){
                 document.getElementById("cc-indent").className = document.getElementById("cc-indent").className=="disable"?"enable":"disable";
             }
-            function newProject(){
-                window.frame.openDialog({
+
+            function selectPFolder(){
+                    window.frame.openDialog({
                     type : 'open',
                     title : 'Select the Project Folder',
                     multiSelect: false,
                     dirSelect : true
                 }, function (err, folders) {
                     if(!err || folders.length!=0){
-                        folder = folders[0];
-                        console.log(folder);
-                        project = new Project(folder);
-                        project.name = folder;
-                        document.getElementById("archives").innerHTML = "";
-                        project.folders.forEach(function(f){
-                            console.log(f);
-                            document.getElementById("archives").appendChild(f.getHTML());
-                        });
-                        project.files.forEach(function(f){
-                            console.log(f);
-                            document.getElementById("archives").appendChild(f.getHTML());
-                        });
+                        $("#np-folder").val(folders[0]);
                     }
                 });
+            }
+            function newProject(){
+                var name = $("#np-name").val();
+                var folder = $("#np-folder").val();
+                var type = $('#np-type').data('ddslick').selectedData.value;
+                project = new Project(name, folder, type);
+                project.open(document.getElementById("archives"));
+                projects.push(project);
+                fs.writeFile( "./content/projects.json", JSON.stringify( [bprojects.concat([{"name":name,"folder":folder,"type":type}])] ), "utf8", function(){} );
+                npClose();
             }
             function setIndent(){
                 numberField = document.querySelector("#cc-indent > li > input[type='text']");
@@ -150,6 +174,16 @@
                 document.querySelector(".CodeMirror").style.fontSize = (parseInt((size==""?"11pt":size).replace("pt","")) - 1) + "pt";
                 document.querySelector(".cc-fontSize > p").innerHTML = "Font: " + document.querySelector(".CodeMirror").style.fontSize;
             }
+            function npClose(){
+                $("#content").css("display","none");
+            }
+            function npOpen(){
+                $("#content").css("display","block");
+                $("#np-name").val("");
+                $("#np-folder").val("");
+                $('#np-type').ddslick('destroy');
+                $('#np-type').ddslick();
+            }
             function start(){
                 editor = CodeMirror(document.body,
                 {
@@ -196,14 +230,22 @@
                         include("mode/"+CodeMirror.modeInfo[i].mode+"/"+CodeMirror.modeInfo[i].mode+".js",function(){});
                     }
                 }
+                for(var i=0;i<bprojects.length;i++){
+                    projects.push(new Project(bprojects[i].name, bprojects[i].folder, bprojects[i].type));
+                }
+                $('#np-type').ddslick({
+                    data:ddData,
+                    width:384,
+                    selectText: "Select your project type",
+                    imagePosition:"right"
+                });
             }
         </script>
-        <link rel="stylesheet" href="css/reset.css" />
-        <link rel="stylesheet" href="css/geovanni.css" />
         <link rel="stylesheet" href="css/tree.css">
         <link rel="stylesheet" href="lib/codemirror.css">
         <link rel="stylesheet" href="addon/hint/show-hint.css">
         <link rel="stylesheet" href="theme/ambiance_g.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/global.css">
     </head>
     <body onload="start()">
@@ -247,6 +289,34 @@
             </span>
             <ul id='archives' class='tree-js'>
             </ul>
+        </div>
+        <div id='content'>
+            <div id='new-project' class='window panel panel-default'>
+                <div class='panel-heading'>
+                    Create Project
+                    <button type="button" class="close" data-dismiss="alert" onclick="npClose()">×</button>
+                </div>
+                <div class="panel-body">
+                    <div class='input-group'>
+                        <span class="input-group-addon">Name</span>
+                        <input type='text' id='np-name' class="form-control" placeholder="Name"></div>
+                    <div class='input-group'>
+                        <span class="input-group-addon">Folder</span>
+                        <input type='text' id='np-folder' class="form-control" placeholder="Folder">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="selectPFolder()">Select</button>
+                        </span>
+                    </div>
+                    <div class='input-group'>
+                        <span class="input-group-addon">Type</span>
+                        <div id="np-type" class="form-control"></div>
+                    </div>
+                </div>
+                <div class="panel-footer btn-group btn-group-justified">
+                    <buttom class='cancel btn btn-default' onclick='npClose()'>Cancel</buttom>
+                    <buttom class='do btn btn-primary' onclick="newProject()">Make</buttom>
+                </div>
+            </div>
         </div>
         <!--<iframe id="preview"></iframe>-->
     </body>

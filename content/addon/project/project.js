@@ -1,7 +1,7 @@
-function Project(path){
-    this.name;
+function Project(name,path,type){
+    this.name = name;
     this.path = path;
-    this.type;
+    this.type = type;
     this.folders = [];
     this.files = [];
     var list = fs.readdirSync(this.path);
@@ -19,6 +19,15 @@ function Project(path){
     });
     this.files = files;
     this.folders = folders;
+    this.open = function(dom){
+        dom.innerHTML = "";
+        this.folders.forEach(function(f){
+            dom.appendChild(f.getHTML());
+        });
+        this.files.forEach(function(f){
+            dom.appendChild(f.getHTML());
+        });
+    }
 }
 
 function File(path){

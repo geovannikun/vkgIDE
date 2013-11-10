@@ -1,6 +1,7 @@
 var app = module.exports = require('appjs');
 var fs = require('fs');
 var mime = require('mime');
+var bprojects = require('./content/projects.json');
 
 app.serveFilesFrom(__dirname + '/content');
 
@@ -92,6 +93,7 @@ window.on('ready', function(){
   window.require = require;
   window.fs = fs;
   window.mime = mime;
+  window.bprojects = bprojects;
   function F12(e){ return e.keyIdentifier === 'F12' }
   function Command_Option_J(e){ return e.keyCode === 74 && e.metaKey && e.altKey }
   this.Function('return '+function(require, process, Buffer){

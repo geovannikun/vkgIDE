@@ -1,0 +1,233 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'notify' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.15
+4 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/package.json
+5 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/appjs/package.json
+6 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/appjs-linux-x64/package.json
+7 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/mime/package.json
+8 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/shelljs/package.json
+9 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/walk/package.json
+10 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/package.json
+11 verbose cache add [ 'notify', null ]
+12 verbose cache add name=undefined spec="notify" args=["notify",null]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'notify',
+13 verbose parsed url   path: 'notify',
+13 verbose parsed url   href: 'notify' }
+14 silly lockFile 4f08301d-notify notify
+15 verbose lock notify /home/geovanni/.npm/4f08301d-notify.lock
+16 silly lockFile 4f08301d-notify notify
+17 silly lockFile 4f08301d-notify notify
+18 verbose addNamed [ 'notify', '' ]
+19 verbose addNamed [ null, '*' ]
+20 silly lockFile e5e1da5f-notify notify@
+21 verbose lock notify@ /home/geovanni/.npm/e5e1da5f-notify.lock
+22 silly addNameRange { name: 'notify', range: '*', hasData: false }
+23 verbose url raw notify
+24 verbose url resolving [ 'https://registry.npmjs.org/', './notify' ]
+25 verbose url resolved https://registry.npmjs.org/notify
+26 info trying registry request attempt 1 at 22:44:29
+27 http GET https://registry.npmjs.org/notify
+28 http 200 https://registry.npmjs.org/notify
+29 silly registry.get cb [ 200,
+29 silly registry.get   { vary: 'Accept',
+29 silly registry.get     server: 'CouchDB/1.3.1 (Erlang OTP/R15B03)',
+29 silly registry.get     etag: '"9D9RFTEZT2KVP4Z8HYPRH7VD"',
+29 silly registry.get     date: 'Sun, 10 Nov 2013 00:44:31 GMT',
+29 silly registry.get     'content-type': 'application/json',
+29 silly registry.get     'content-length': '1459' } ]
+30 silly addNameRange number 2 { name: 'notify', range: '*', hasData: true }
+31 silly addNameRange versions [ 'notify', [ '0.1.0' ] ]
+32 verbose addNamed [ 'notify', '0.1.0' ]
+33 verbose addNamed [ '0.1.0', '0.1.0' ]
+34 silly lockFile b0e6374d-notify-0-1-0 notify@0.1.0
+35 verbose lock notify@0.1.0 /home/geovanni/.npm/b0e6374d-notify-0-1-0.lock
+36 silly lockFile 8a53d403-pmjs-org-notify-notify-0-1-0-tgz https://registry.npmjs.org/notify/-/notify-0.1.0.tgz
+37 verbose lock https://registry.npmjs.org/notify/-/notify-0.1.0.tgz /home/geovanni/.npm/8a53d403-pmjs-org-notify-notify-0-1-0-tgz.lock
+38 verbose addRemoteTarball [ 'https://registry.npmjs.org/notify/-/notify-0.1.0.tgz',
+38 verbose addRemoteTarball   '0889d5edf9911d3d72fb12b9b73176c20727b05d' ]
+39 info retry fetch attempt 1 at 22:44:31
+40 verbose fetch to= /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz
+41 http GET https://registry.npmjs.org/notify/-/notify-0.1.0.tgz
+42 http 200 https://registry.npmjs.org/notify/-/notify-0.1.0.tgz
+43 silly shasum updated bytes 65536
+44 silly shasum updated bytes 60421
+45 info shasum 0889d5edf9911d3d72fb12b9b73176c20727b05d
+45 info shasum /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz
+46 verbose tar unpack /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz
+47 silly lockFile 1b557949-1521-0-03796419780701399-package /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+48 verbose lock /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package /home/geovanni/.npm/1b557949-1521-0-03796419780701399-package.lock
+49 silly lockFile 4b9c7188-1521-0-03796419780701399-tmp-tgz /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz
+50 verbose lock /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz /home/geovanni/.npm/4b9c7188-1521-0-03796419780701399-tmp-tgz.lock
+51 silly gunzTarPerm modes [ '755', '644' ]
+52 silly gunzTarPerm extractEntry
+53 silly gunzTarPerm extractEntry demo/
+54 silly gunzTarPerm extractEntry demo/demo.js
+55 silly gunzTarPerm extractEntry build/
+56 silly gunzTarPerm extractEntry build/default/
+57 silly gunzTarPerm extractEntry build/default/gtknotify.node
+58 silly gunzTarPerm extractEntry build/default/src/
+59 silly gunzTarPerm extractEntry build/default/src/node_gtknotify_1.o
+60 silly gunzTarPerm extractEntry build/c4che/
+61 silly gunzTarPerm extractEntry build/c4che/build.config.py
+62 silly gunzTarPerm extractEntry build/c4che/default.cache.py
+63 silly gunzTarPerm extractEntry build/.conf_check_0/
+64 silly gunzTarPerm extractEntry build/.conf_check_0/testbuild/
+65 silly gunzTarPerm extractEntry build/.conf_check_0/testbuild/default/
+66 silly gunzTarPerm extractEntry build/.conf_check_0/testbuild/default/test_1.o
+67 silly gunzTarPerm extractEntry build/.conf_check_0/testbuild/default/testprog
+68 silly gunzTarPerm extractEntry build/.conf_check_0/testbuild/.wafpickle-7
+69 silly gunzTarPerm extractEntry build/.conf_check_0/test.cpp
+70 silly gunzTarPerm extractEntry build/.wafpickle-7
+71 silly gunzTarPerm extractEntry build/.gitignore
+72 silly gunzTarPerm extractEntry build/config.log
+73 silly gunzTarPerm extractEntry package.json
+74 silly gunzTarPerm extractEntry LICENSE
+75 silly gunzTarPerm extractEntry .gitignore~
+76 silly gunzTarPerm extractEntry wscript
+77 silly gunzTarPerm extractEntry .gitignore
+78 silly gunzTarPerm extractEntry src/
+79 silly gunzTarPerm extractEntry src/node_gtknotify.cpp
+80 silly gunzTarPerm extractEntry README.md
+81 silly gunzTarPerm extractEntry TUTORIAL.md
+82 verbose read json /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package/package.json
+83 silly lockFile 1b557949-1521-0-03796419780701399-package /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+84 silly lockFile 1b557949-1521-0-03796419780701399-package /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+85 silly lockFile 4b9c7188-1521-0-03796419780701399-tmp-tgz /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz
+86 silly lockFile 4b9c7188-1521-0-03796419780701399-tmp-tgz /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/tmp.tgz
+87 verbose from cache /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package/package.json
+88 verbose tar pack [ '/home/geovanni/.npm/notify/0.1.0/package.tgz',
+88 verbose tar pack   '/home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package' ]
+89 verbose tarball /home/geovanni/.npm/notify/0.1.0/package.tgz
+90 verbose folder /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+91 silly lockFile 1b557949-1521-0-03796419780701399-package /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+92 verbose lock /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package /home/geovanni/.npm/1b557949-1521-0-03796419780701399-package.lock
+93 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+94 verbose lock /home/geovanni/.npm/notify/0.1.0/package.tgz /home/geovanni/.npm/d27cbf94-nni-npm-notify-0-1-0-package-tgz.lock
+95 silly lockFile 1b557949-1521-0-03796419780701399-package /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+96 silly lockFile 1b557949-1521-0-03796419780701399-package /home/geovanni/tmp/npm-8817/1384044271521-0.03796419780701399/package
+97 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+98 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+99 silly lockFile 0ff85c0c-eovanni-npm-notify-0-1-0-package /home/geovanni/.npm/notify/0.1.0/package
+100 verbose lock /home/geovanni/.npm/notify/0.1.0/package /home/geovanni/.npm/0ff85c0c-eovanni-npm-notify-0-1-0-package.lock
+101 silly lockFile 0ff85c0c-eovanni-npm-notify-0-1-0-package /home/geovanni/.npm/notify/0.1.0/package
+102 silly lockFile 0ff85c0c-eovanni-npm-notify-0-1-0-package /home/geovanni/.npm/notify/0.1.0/package
+103 verbose tar unpack /home/geovanni/.npm/notify/0.1.0/package.tgz
+104 silly lockFile 0ff85c0c-eovanni-npm-notify-0-1-0-package /home/geovanni/.npm/notify/0.1.0/package
+105 verbose lock /home/geovanni/.npm/notify/0.1.0/package /home/geovanni/.npm/0ff85c0c-eovanni-npm-notify-0-1-0-package.lock
+106 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+107 verbose lock /home/geovanni/.npm/notify/0.1.0/package.tgz /home/geovanni/.npm/d27cbf94-nni-npm-notify-0-1-0-package-tgz.lock
+108 silly gunzTarPerm modes [ '755', '644' ]
+109 silly gunzTarPerm extractEntry package.json
+110 silly gunzTarPerm extractEntry .npmignore
+111 silly gunzTarPerm extractEntry README.md
+112 silly gunzTarPerm extractEntry LICENSE
+113 silly gunzTarPerm extractEntry TUTORIAL.md
+114 silly gunzTarPerm extractEntry demo/demo.js
+115 silly gunzTarPerm extractEntry src/node_gtknotify.cpp
+116 silly gunzTarPerm extractEntry wscript
+117 verbose read json /home/geovanni/.npm/notify/0.1.0/package/package.json
+118 silly lockFile 0ff85c0c-eovanni-npm-notify-0-1-0-package /home/geovanni/.npm/notify/0.1.0/package
+119 silly lockFile 0ff85c0c-eovanni-npm-notify-0-1-0-package /home/geovanni/.npm/notify/0.1.0/package
+120 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+121 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+122 silly shasum updated bytes 4686
+123 info shasum 20515d9c999e5a40ac4d66b4e29a88b3a17efbd5
+123 info shasum /home/geovanni/.npm/notify/0.1.0/package.tgz
+124 verbose from cache /home/geovanni/.npm/notify/0.1.0/package/package.json
+125 verbose chmod /home/geovanni/.npm/notify/0.1.0/package.tgz 644
+126 verbose chown /home/geovanni/.npm/notify/0.1.0/package.tgz [ 1000, 1000 ]
+127 silly lockFile 8a53d403-pmjs-org-notify-notify-0-1-0-tgz https://registry.npmjs.org/notify/-/notify-0.1.0.tgz
+128 silly lockFile 8a53d403-pmjs-org-notify-notify-0-1-0-tgz https://registry.npmjs.org/notify/-/notify-0.1.0.tgz
+129 silly lockFile b0e6374d-notify-0-1-0 notify@0.1.0
+130 silly lockFile b0e6374d-notify-0-1-0 notify@0.1.0
+131 silly lockFile e5e1da5f-notify notify@
+132 silly lockFile e5e1da5f-notify notify@
+133 silly resolved [ { name: 'notify',
+133 silly resolved     version: '0.1.0',
+133 silly resolved     description: 'Native Node.js C++ extension for displaying desktop notifications using GNOME\'s libnotify library.',
+133 silly resolved     homepage: 'https://github.com/olalonde/node-notify',
+133 silly resolved     author:
+133 silly resolved      { name: 'Olivier Lalonde',
+133 silly resolved        email: 'olalonde@gmail.com',
+133 silly resolved        url: 'http://www.syskall.com/' },
+133 silly resolved     repository:
+133 silly resolved      { type: 'git',
+133 silly resolved        url: 'https://github.com/olalonde/node-notify.git' },
+133 silly resolved     scripts:
+133 silly resolved      { preinstall: 'node-waf configure && node-waf build',
+133 silly resolved        preuninstall: 'rm -rf build/*' },
+133 silly resolved     main: 'build/default/gtknotify.node',
+133 silly resolved     readme: '__THIS IS A WORK IN PROGRESS! THE TUTO WILL BE UP ON [HTTP://SYSKALL.COM](HTTP://SYSKALL.COM) WITHIN A FEW DAYS__\n\nPart 1 (building a V8 extension) available here: [http://syskall.com/how-to-roll-out-your-own-javascript-api-with](http://syskall.com/how-to-roll-out-your-own-javascript-api-with)\n\n## Install ##\n\n    node-waf configure && node-waf build\n\n## References ##\n\n- [https://www.cloudkick.com/blog/2010/aug/23/writing-nodejs-native-extensions/]()\n- [https://github.com/pquerna/node-extension-examples](https://github.com/pquerna/node-extension-examples)\n- [http://code.google.com/apis/v8/embed.html](http://code.google.com/apis/v8/embed.html)\n- irc.freenode.org #v8 #node.js\n- [https://github.com/ncb000gt/node.bcrypt.js](https://github.com/ncb000gt/node.bcrypt.js)\n- [https://github.com/joyent/node](https://github.com/joyent/node)\n',
+133 silly resolved     readmeFilename: 'README.md',
+133 silly resolved     _id: 'notify@0.1.0',
+133 silly resolved     dist: { shasum: '20515d9c999e5a40ac4d66b4e29a88b3a17efbd5' },
+133 silly resolved     _from: 'notify@',
+133 silly resolved     _resolved: 'https://registry.npmjs.org/notify/-/notify-0.1.0.tgz' } ]
+134 info install notify@0.1.0 into /home/geovanni/Programacao/Projetos/vkgIDE
+135 info installOne notify@0.1.0
+136 verbose from cache /home/geovanni/.npm/notify/0.1.0/package/package.json
+137 info /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify unbuild
+138 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify/package.json
+139 verbose tar unpack /home/geovanni/.npm/notify/0.1.0/package.tgz
+140 silly lockFile 4b4ce710-jetos-vkgIDE-node-modules-notify /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify
+141 verbose lock /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify /home/geovanni/.npm/4b4ce710-jetos-vkgIDE-node-modules-notify.lock
+142 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+143 verbose lock /home/geovanni/.npm/notify/0.1.0/package.tgz /home/geovanni/.npm/d27cbf94-nni-npm-notify-0-1-0-package-tgz.lock
+144 silly gunzTarPerm modes [ '755', '644' ]
+145 silly gunzTarPerm extractEntry package.json
+146 silly gunzTarPerm extractEntry .npmignore
+147 silly gunzTarPerm extractEntry README.md
+148 silly gunzTarPerm extractEntry LICENSE
+149 silly gunzTarPerm extractEntry TUTORIAL.md
+150 silly gunzTarPerm extractEntry demo/demo.js
+151 silly gunzTarPerm extractEntry src/node_gtknotify.cpp
+152 silly gunzTarPerm extractEntry wscript
+153 verbose read json /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify/package.json
+154 silly lockFile 4b4ce710-jetos-vkgIDE-node-modules-notify /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify
+155 silly lockFile 4b4ce710-jetos-vkgIDE-node-modules-notify /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify
+156 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+157 silly lockFile d27cbf94-nni-npm-notify-0-1-0-package-tgz /home/geovanni/.npm/notify/0.1.0/package.tgz
+158 info preinstall notify@0.1.0
+159 verbose unsafe-perm in lifecycle true
+160 silly exec sh "-c" "node-waf configure && node-waf build"
+161 silly sh,-c,node-waf configure && node-waf build,/home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify spawning
+162 info notify@0.1.0 Failed to exec preinstall script
+163 info /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify unbuild
+164 verbose from cache /home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify/package.json
+165 warn This failure might be due to the use of legacy binary "node"
+166 warn For further explanations, please read
+/usr/share/doc/nodejs/README.Debian
+167 info preuninstall notify@0.1.0
+168 verbose unsafe-perm in lifecycle true
+169 silly exec sh "-c" "rm -rf build/*"
+170 silly sh,-c,rm -rf build/*,/home/geovanni/Programacao/Projetos/vkgIDE/node_modules/notify spawning
+171 info uninstall notify@0.1.0
+172 verbose true,/home/geovanni/Programacao/Projetos/vkgIDE/node_modules,/home/geovanni/Programacao/Projetos/vkgIDE/node_modules unbuild notify@0.1.0
+173 info postuninstall notify@0.1.0
+174 error notify@0.1.0 preinstall: `node-waf configure && node-waf build`
+174 error `sh "-c" "node-waf configure && node-waf build"` failed with 127
+175 error Failed at the notify@0.1.0 preinstall script.
+175 error This is most likely a problem with the notify package,
+175 error not with npm itself.
+175 error Tell the author that this fails on your system:
+175 error     node-waf configure && node-waf build
+175 error You can get their info via:
+175 error     npm owner ls notify
+175 error There is likely additional logging output above.
+176 error System Linux 3.11.0-13-generic
+177 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "notify"
+178 error cwd /home/geovanni/Programacao/Projetos/vkgIDE
+179 error node -v v0.10.15
+180 error npm -v 1.2.18
+181 error code ELIFECYCLE
+182 verbose exit [ 1, true ]
