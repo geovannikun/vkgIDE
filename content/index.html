@@ -28,6 +28,7 @@
         <script src="addon/project/project.js"></script>
         <script>
             var ide;
+            var mime = require("mime");
             var ddData = [
                 {
                     text: "Python",
@@ -76,7 +77,7 @@
             }
 
             function selectPFolder(){
-                    window.frame.openDialog({
+                window.frame.openDialog({
                     type : 'open',
                     title : 'Select the Project Folder',
                     multiSelect: false,
@@ -124,11 +125,11 @@
                 }
                 var number = numberField.value==""?0:numberField.value;
                 var isTab = document.querySelector("#cc-indent > li > input:checked").value=="tab";
-                editor.setOption("tabSize", number);
-                editor.setOption("indentUnit", number);
-                editor.setOption("indentWithTabs", isTab);
+                ide.editor.setOption("tabSize", number);
+                ide.editor.setOption("indentUnit", number);
+                ide.editor.setOption("indentWithTabs", isTab);
                 document.querySelector(".cc-indent > p").innerHTML = number+" "+(isTab?"Tabs":"Spaces");
-                editor.refresh();
+                ide.editor.refresh();
             }
             function setLanguage(l){
                 disablePopups();
@@ -139,12 +140,12 @@
                     }
                 }
                 document.getElementsByClassName("cc-language")[0].getElementsByTagName("p")[0].innerHTML = name;
-                editor.setOption("mode", l);
-                editor.refresh();
+                ide.editor.setOption("mode", l);
+                ide.editor.refresh();
             }
             function setWrap(){
-                editor.setOption("lineWrapping", !editor.getOption("lineWrapping"));
-                document.querySelector(".cc-wrap > p").innerHTML = editor.getOption("lineWrapping")?"Wrap":"No Wrap";
+                ide.editor.setOption("lineWrapping", !ide.editor.getOption("lineWrapping"));
+                document.querySelector(".cc-wrap > p").innerHTML = ide.editor.getOption("lineWrapping")?"Wrap":"No Wrap";
             }
             function selectFile(cm){
                 window.frame.openDialog({
