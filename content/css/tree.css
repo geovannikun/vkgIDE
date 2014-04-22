@@ -1,0 +1,53 @@
+.tree-js{
+    display:inline-block;
+    padding: 10px;
+    padding-top: 35px;
+    z-index:9;
+}
+.tree-js li {
+    list-style-type: none;
+    margin-left: 10px;
+    clear:both;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.tree-js > li{
+    margin-left: 0px;
+}
+
+.tree-js li > input{
+    float:left;
+    width:15px;
+    height:15px;
+    margin-right: 5px;
+    line-height: 20px;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    border:0px solid black;
+}
+
+.tree-js li > input{
+    float:left;
+}
+
+.tree-js li > input + *{
+    display:none;
+}
+
+.tree-js li > input:checked + *{
+    display:block;
+}
+
+.tree-js li > input[type='checkbox']{
+    background: transparent url('../img/folder.png') no-repeat;
+    background-position:center center;
+    background-size: 100% 90%;
+}
+
+.tree-js li > input[type='radio']{
+    background: transparent url('../img/file.png') no-repeat;
+    background-position:center center;
+    background-size: 70% 100%;
+}

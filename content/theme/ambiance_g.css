@@ -1,0 +1,83 @@
+/* ambiance theme for codemirror */
+
+/* Color scheme */
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(UbuntuMono-Regular.woff) format('woff');
+}
+
+.cm-s-ambiance span.cm-meta {color: #FF1717;}
+.cm-s-ambiance span.cm-keyword {font-weight: bold; color: #7F0055; }
+.cm-s-ambiance span.cm-atom {color: #219;}
+.cm-s-ambiance span.cm-number {color: #164;}
+.cm-s-ambiance span.cm-def {color: #00f;}
+.cm-s-ambiance span.cm-variable {color: black;}
+.cm-s-ambiance span.cm-variable-2 {color: #0000C0;}
+.cm-s-ambiance span.cm-variable-3 {color: #0000C0;}
+.cm-s-ambiance span.cm-property {color: black;}
+.cm-s-ambiance span.cm-operator {color: black;}
+.cm-s-ambiance span.cm-comment {color: #3F7F5F;}
+.cm-s-ambiance span.cm-string {color: #2A00FF;}
+.cm-s-ambiance span.cm-string-2 {color: #f50;}
+.cm-s-ambiance span.cm-error {color: #f00;}
+.cm-s-ambiance span.cm-qualifier {color: #555;}
+.cm-s-ambiance span.cm-builtin {color: #30a;}
+.cm-s-ambiance span.cm-bracket {color: #cc7;}
+.cm-s-ambiance span.cm-tag {color: #170;}
+.cm-s-ambiance span.cm-attribute {color: #00c;}
+.cm-s-ambiance span.cm-link {color: #219;}
+
+.cm-s-ambiance .CodeMirror-matchingbracket { color:#000 !important; font-weight: bold; }
+.cm-s-ambiance .CodeMirror-nonmatchingbracket { color:#f22 !important; font-weight: bold;}
+
+.cm-s-ambiance .CodeMirror-selected {
+  background: rgba(15, 15, 15, 0.3);
+}
+.cm-s-ambiance .CodeMirror-focused .CodeMirror-selected {
+  background: rgba(15, 15, 15, 0.3);
+}
+
+/* Editor styling */
+
+.cm-s-ambiance.CodeMirror {
+    font-family: "Ubuntu Mono", monospace !important;
+    color: #696969;
+    background-color: #f3f3f3;
+}
+
+.cm-s-ambiance .CodeMirror-gutters {
+  background: #f3f3f3;
+  border-right:1px solid rgba(155, 155, 155, 0.21);
+}
+
+.cm-s-ambiance .CodeMirror-linenumber {
+  text-shadow: 0px 1px 1px #f9f9f9;
+  color: #696969;
+  padding: 0 5px;
+}
+
+.cm-s-ambiance pre {
+padding: 0 10px !important;
+}
+
+.cm-s-ambiance .CodeMirror-lines .CodeMirror-cursor {
+  border-left: 1px solid black;
+}
+
+.cm-s-ambiance .CodeMirror-activeline-background {
+  background: none repeat scroll 0% 0% rgba(155, 155, 155, 0.21);
+}
+
+.CodeMirror-hints{
+    border-radius:0px !important;
+    box-shadow:none !important;
+    padding:0 !important;
+}
+
+.CodeMirror-hints .CodeMirror-hint-active{
+    border-radius:0px !important;
+    background-color:#696969 !important;
+}

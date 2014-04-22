@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+    <head>
+        <title>vkgIDE</title>
+        <meta charset="utf-8">
+        <script>//node imports
+            var fs = require('fs');
+            var mime = require('mime');
+        </script>
+        <script src="lib/jquery-2.0.3.min.js"></script>
+        <script src="lib/jquery.ddslick.min.js"></script>
+        <script src="lib/codemirror.js"></script>
+        <script src="lib/vkgide.js"></script>
+        <script src="mode/meta.js"></script>
+        <script src="addon/selection/active-line.js"></script>
+        <script src="addon/edit/matchbrackets.js"></script>
+        <script src="addon/edit/trailingspace.js"></script>
+        <script src="addon/hint/show-hint.js"></script>
+        <script src="addon/hint/javascript-hint.js"></script>
+        <script src="addon/fold/foldcode.js"></script>
+        <script src="addon/fold/foldgutter.js"></script>
+        <script src="addon/fold/brace-fold.js"></script>
+        <script src="addon/fold/xml-fold.js"></script>
+        <script src="addon/fold/comment-fold.js"></script>
+        <script src="addon/tern/tern.js"></script>
+        <script src="addon/format/autoFormatAll.js"></script>
+        <script src="addon/format/formatting.js"></script>
+        <script src="addon/project/project.js"></script>
+        <script>
+            var ide;
+            var ddData = [
+                {
+                    text: "Python",
+                    value: 1,
+                    selected: false
+                },
+                {
+                    text: "C++",
+                    value: 2,
+                    selected: false
+                },
+                {
+                    text: "C",
+                    value: 3,
+                    selected: true
+                },
+                {
+                    text: "WEB",
+                    value: 4,
+                    selected: false
+                }
+            ];
+
+            function addJavascript(url,callback){
+                var head = document.getElementsByTagName('head')[0];
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = url;
+                script.onreadystatechange = callback;
+                script.onload = callback;
+                head.appendChild(script);
+            }
+            
+            function disablePopups(){
+                ul = document.querySelectorAll(".cc-cf > ul");
+                for(var i = 0;i<ul.length;i++){
+                    ul[i].className = "disable";
+                }
+            }
+            
+            function showLanguages(){
+                document.getElementById("cc-languages").className = document.getElementById("cc-languages").className=="disable"?"enable":"disable";
+            }
+            function showIndent(){
+                document.getElementById("cc-indent").className = document.getElementById("cc-indent").className=="disable"?"enable":"disable";
+            }
+
+            function selectPFolder(){
+                    window.frame.openDialog({
+                    type : 'open',
+                    title : 'Select the Project Folder',
+                    multiSelect: false,
+                    dirSelect : true
+                }, function (err, folders) {
+                    if(!err || folders.length!=0){
+                        $("#np-folder").val(folders[0]);
+                    }
+                });
+            }
+            function newProject(){
+                ide.addProject($('#np-name').val(),$('#np-folder').val(),$('#np-type').data('ddslick').selectedData.value)
+                console.log("maked");
+                dialogClose();
+            }
+            function showCreateProejct(show){
+                if(show){
+                    document.getElementById("new-project").style.display="inline-block";
+                }else{
+                    document.getElementById("new-project").style.display="none";
+                }
+            }
+            
+            function showOpenFolder(callback){
+                var chooser = document.getElementById("choose-directory");
+                chooser.addEventListener("change", function(evt) {
+                    callback(this.value);
+                    console.log(this.value);
+                }, false);
+                chooser.click(); 
+            }
+            
+            function showOpenFile(callback){
+                var chooser = document.getElementById("choose-file");
+                chooser.addEventListener("change", function(evt) {
+                    callback(this.value);
+                }, false);
+                chooser.click(); 
+            }
+            
+            function setIndent(){
+                var numberField = document.querySelector("#cc-indent > li > input[type='text']");
+                if(!/^[0-9]+$/.test(numberField.value)){
+                    numberField.value = "";
+                }
+                var number = numberField.value==""?0:numberField.value;
+                var isTab = document.querySelector("#cc-indent > li > input:checked").value=="tab";
+                editor.setOption("tabSize", number);
+                editor.setOption("indentUnit", number);
+                editor.setOption("indentWithTabs", isTab);
+                document.querySelector(".cc-indent > p").innerHTML = number+" "+(isTab?"Tabs":"Spaces");
+                editor.refresh();
+            }
+            function setLanguage(l){
+                disablePopups();
+                var name;
+                for(i in CodeMirror.modeInfo){
+                    if(CodeMirror.modeInfo[i].mime == l){
+                        name = CodeMirror.modeInfo[i].name;
+                    }
+                }
+                document.getElementsByClassName("cc-language")[0].getElementsByTagName("p")[0].innerHTML = name;
+                editor.setOption("mode", l);
+                editor.refresh();
+            }
+            function setWrap(){
+                editor.setOption("lineWrapping", !editor.getOption("lineWrapping"));
+                document.querySelector(".cc-wrap > p").innerHTML = editor.getOption("lineWrapping")?"Wrap":"No Wrap";
+            }
+            function selectFile(cm){
+                window.frame.openDialog({
+                    type : 'open',
+                    title : 'Open file',
+                    multiSelect: false,
+                    dirSelect : false
+                }, function (err, files) {
+                    if (!err) {
+                        console.log(fs);
+                        var f = new File(files[0]);
+                        cm.setValue(f.load());
+                        editor.setOption("mode", f.mimetype);
+                        editor.refresh();
+                        fileOpened = f;
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+            function selectNPFolder(){
+                showOpenFolder(function(local){
+                    document.getElementById("np-folder").value = local;
+                });
+            }
+            function openFile(dir){
+            }
+            function upFontSize(){
+                size = document.querySelector(".CodeMirror").style.fontSize;
+                console.log(parseInt((size==""?"11pt":size).replace("pt","")) - 1);
+                document.querySelector(".CodeMirror").style.fontSize = (parseInt((size==""?"11pt":size).replace("pt","")) + 1) + "pt";
+                document.querySelector(".cc-fontSize > p").innerHTML = "Font: " + document.querySelector(".CodeMirror").style.fontSize;
+            }
+            function downFontSize(){
+                size = document.querySelector(".CodeMirror").style.fontSize;
+                console.log(parseInt((size==""?"11pt":size).replace("pt","")) - 1);
+                document.querySelector(".CodeMirror").style.fontSize = (parseInt((size==""?"11pt":size).replace("pt","")) - 1) + "pt";
+                document.querySelector(".cc-fontSize > p").innerHTML = "Font: " + document.querySelector(".CodeMirror").style.fontSize;
+            }
+            function dialogClose(){
+                $("#content").css("display","none");
+            }
+            function dialogOpen(){
+                $("#content").css("display","block");
+                $("#np-name").val("");
+                $("#np-folder").val("");
+            }
+            function start(){
+                ide = new vkgIDE(require('nw.gui').Window.get(), document.body, document.getElementById("archives"));
+                ide.loadProjects();
+                ide.start();
+                for(var i=0,j=CodeMirror.modeInfo.length;i<j;i++){
+                    document.getElementById("cc-languages").innerHTML+=
+                        "<li onclick='setLanguage(\""+CodeMirror.modeInfo[i].mime+"\")'>"+CodeMirror.modeInfo[i].name+"</li>";
+                    if(CodeMirror.modeInfo[i].mode!="null"){
+                        addJavascript("mode/"+CodeMirror.modeInfo[i].mode+"/"+CodeMirror.modeInfo[i].mode+".js",function(){});
+                    }
+                }
+                
+                $('#np-type').ddslick({
+                    data:ddData,
+                    width:388,
+                    selectText: "Select your project type",
+                    imagePosition:"right"
+                });
+            }
+        </script>
+        <link rel="stylesheet" href="css/tree.css">
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <link rel="stylesheet" href="addon/hint/show-hint.css">
+        <link rel="stylesheet" href="theme/ambiance_g.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/global.css">
+    </head>
+    <body onload="start()">
+        <header class='titlebar' style="-webkit-app-region: drag">
+            <p id='window-title'></p>
+            <span></span>
+            <ul id='window-buttons'>
+                <li onclick="ide.window.minimize()">⊝</li>
+                <li onclick="ide.window.maximize()">⊚</li>
+                <li onclick="ide.window.close()">⊗</li>
+            </ul>
+        </header>
+        <div id='open-folder' style="display:none">
+            <p>/home/geovanni/</p>
+            <ul>
+                <li>Folder 1</li>
+                <li>Folder 2</li>
+            </ul>
+        </div>
+        <ul id='opened-files'>
+            <li class="selected" onclick="selectFile()">File 1</li>
+            <li onclick="selectFile()">File 2</li>
+            <li onclick="selectFile()">File 3</li>
+        </ul>
+        <div id='code-config'>
+            <span class='cc-language cc-cf'>
+                <p onclick="showLanguages()">Plain Text</p>
+                <ul id='cc-languages' class="disable">
+                </ul>
+            </span>
+            <span class='cc-indent cc-cf'>
+                <p onclick="showIndent()">4 Spaces</p>
+                <ul id='cc-indent' class="disable">
+                    <li onclick="setIndent()">Size <input onkeyup="setIndent()" type="text" value="4"></li>
+                    <li onclick="setIndent()"><input id='tab' type="radio" name="indent" value="tab"><label for="tab">Tab</label><input id='space' type="radio" name="indent" value="space" checked><label for="space">Space</label></li>
+                </ul>   
+            </span>
+            <span class='cc-fontSize cc-cf'>
+                <button onclick="downFontSize()">-</button>
+                <p>Font: 11pt</p>
+                <button onclick="upFontSize()">+</button>
+            </span>
+            <span class='cc-wrap cc-cf'>
+                <p onclick="setWrap()">No Wrap</p>
+            </span>
+        </div>
+        <div id='archive-menu'>
+            <span class='selectProject'>
+                <p>Projeto Selecionado</p>
+                <ul id='projects' class='projects'>
+                    <li class="newProject" onclick="dialogOpen()">New Project...</li>
+                    <li>Projeto 1</li>
+                    <li>Projeto 2</li>
+                </ul>
+            </span>
+            <ul id='archives' class='tree-js'>
+            </ul>
+        </div>
+        <div id='content'>
+            <div id='new-project' class='window panel panel-default'>
+                <div class='panel-heading'>
+                    Create Project
+                    <button type="button" class="close" data-dismiss="alert" onclick="dialogClose()">×</button>
+                </div>
+                <div class="panel-body">
+                    <div class='input-group'>
+                        <span class="input-group-addon">Name</span>
+                        <input type='text' id='np-name' class="form-control" placeholder="Name"></div>
+                    <div class='input-group'>
+                        <span class="input-group-addon">Folder</span>
+                        <input type='text' id='np-folder' class="form-control" placeholder="Folder">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="selectNPFolder();">Select</button>
+                        </span>
+                    </div>
+                    <div class='input-group'>
+                        <span class="input-group-addon">Type</span>
+                        <div id="np-type" class="form-control"></div>
+                    </div>
+                </div>
+                <div class="panel-footer btn-group btn-group-justified">
+                    <buttom class='cancel btn btn-default' onclick='npClose()'>Cancel</buttom>
+                    <buttom class='do btn btn-primary' onclick="newProject($('#np-name').val(),$('#np-folder').val(),$('#np-type').data('ddslick').selectedData.value)">Make</buttom>
+                </div>
+            </div>
+        </div>
+        <input id='choose-directory' class='hidden' type="file" nwdirectory />
+        <input id='choose-file' class='hidden' type="file"/>
+    </body>
+</html>
