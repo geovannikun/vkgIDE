@@ -1,22 +1,21 @@
 function vkgIDE(window, editorElement, archivesElement){
-    var self = this;
     this.window = window;
     this.editor;
     this.projects = [];
     this.projectOpen;
     this.fileOpen;
-    this.fileOpened = new Array();
+    this.filesOpened = new Array();
     this.projectsJson;
     this.editorElement = editorElement;
     this.archivesElement = archivesElement;
     this.start = function(){
-        self.editor = CodeMirror(
-            self.editorElement,
+        this.editor = CodeMirror(
+            this.editorElement,
             {
                 value: "Wellcome",
                 mode:  "none",
                 lineNumbers: true,
-                extraKeys: self.keyBinding,
+                extraKeys: this.keyBinding,
                 styleActiveLine: true,
                 matchBrackets: true,
                 theme:"ambiance",
@@ -30,37 +29,35 @@ function vkgIDE(window, editorElement, archivesElement){
                 gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
             }
         );
-        self.editor.focus();
-        self.editor.on("focus",disablePopups);
-    }
+        this.editor.focus();
+        this.editor.on("focus",disablePopups);
+    }.bind(this);
     this.loadProjects = function(){
-        self.projectsJson = eval(readFile('./projects.json'));
-        console.log(self.projectsJson);
+        this.projectsJson = eval(readFile('./projects.json'));
         document.getElementById("projects").innerHTML="<li class='newProject' onclick='dialogOpen()'>New Project...</li>";
-        for(var i=0,j=self.projectsJson.length;i<j;i++){
-            self.projects.push(new Project(self.projectsJson[i].name, self.projectsJson[i].folder, self.projectsJson[i].type));
-            document.getElementById("projects").innerHTML+="<li onclick='ide.selectProject("+i+")'>"+self.projectsJson[i].name+"</li>";
+        for(var i=0,j=this.projectsJson.length;i<j;i++){
+            this.projects.push(new Project(this.projectsJson[i].name, this.projectsJson[i].folder, this.projectsJson[i].type, this));
+            document.getElementById("projects").innerHTML+="<li onclick='ide.selectProject("+i+")'>"+this.projectsJson[i].name+"</li>";
         }
     }
     this.selectProject = function(project){
-        self.projectOpen = self.projects[project];
-        self.projectOpen.showArchives(self.archivesElement);
+        this.projectOpen = this.projects[project];
+        this.projectOpen.showArchives(this.archivesElement);
     }
     this.addProject = function(name,folder,type){
-        self.projectsJson = eval(readFile('./projects.json'));
+        this.projectsJson = eval(readFile('./projects.json'));
         fs.writeFile(
             "content/projects.json",
             JSON.stringify(
-                self.projectsJson.concat(
+                this.projectsJson.concat(
                     {"name":name,"folder":folder,"type":type}
                 )
             ), "utf8" , function(){} );
-        console.log(self.projectsJson);
-        self.loadProjects();
+        this.loadProjects();
     }
     this.changeTitle = function(title){
         document.title = title + " - vkgIDE";
-        self.window.title = title + " - vkgIDE";
+        this.window.title = title + " - vkgIDE";
     }
     this.keyBinding = {
         "Ctrl-Space": function(cm) {
@@ -93,7 +90,7 @@ function vkgIDE(window, editorElement, archivesElement){
             });
         },
         "Ctrl-S": function(cm){
-            self.fileOpen.save(cm.getValue());
+            this.fileOpen.save(cm.getValue());
             console.log("saved");
         },
         "Tab": function(cm) {

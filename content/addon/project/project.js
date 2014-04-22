@@ -1,5 +1,4 @@
 function Project(name,path,type,ide){
-    var self = this;
     this.name = name;
     this.path = path;
     this.type = type;
@@ -14,11 +13,14 @@ function Project(name,path,type,ide){
         var file = path + '/' + file;
         var stat = fs.statSync(file);
         if (stat && stat.isDirectory()){
-            folders.push(new Folder(file,self));
+            folders.push(new Folder(file,this));
         }else{
-            files.push(new File(file,self));
+            files.push(new File(file,this));
         }
-    });
+    }.bind(this));
+    this.toString = function(){
+        return this.name;
+    }
     this.files = files;
     this.folders = folders;
     this.showArchives = function(dom){
@@ -33,7 +35,6 @@ function Project(name,path,type,ide){
 }
 
 function File(path,project){
-    var self = this;
     this.path = path;
     this.mimetype = mime.lookup(this.path);
     this.name = this.path.slice(this.path.lastIndexOf('/')+1, this.path.length);
@@ -44,12 +45,11 @@ function File(path,project){
             return !err;
         });
     };
-    this.load = function(sf){
-        var ide = sf.project.ide;
-        console.log(ide);
+    this.load = function(){
+        var ide = this.project.ide;
         ide.fileOpen = this;
-        ide.filesOpened.append(this);
-        if(!self.document){
+        ide.filesOpened.push(this);
+        if(!this.document){
             this.document = CodeMirror.Doc(fs.readFileSync(this.path, "utf8"), this.mimetype);
         }
         ide.editor.swapDoc(this.document);
@@ -67,7 +67,7 @@ function File(path,project){
         input.type = "radio";
         input.id = "fl-"+this.name;
         var label = document.createElement("label");
-        label.onclick = function(){self.load(self)};
+        label.onclick = this.load.bind(this);
         label.htmlFor = "fl-"+this.name;
         label.innerHTML = this.name;
         list.appendChild(label);
@@ -77,7 +77,6 @@ function File(path,project){
 }
 
 function Folder(path,project){
-    var self = this;
     this.name = path.slice(path.lastIndexOf('/')+1, path.length);
     this.path = path;
     this.folders = [];
@@ -85,14 +84,14 @@ function Folder(path,project){
     this.project = project;
     var list = fs.readdirSync(this.path);
     list.forEach(function(file) {
-        var file = self.path + '/' + file;
+        var file = this.path + '/' + file;
         var stat = fs.statSync(file);
         if (stat && stat.isDirectory()){
-            self.folders.push(new Folder(file));
+            this.folders.push(new Folder(file, this.project));
         }else{
-            self.files.push(new File(file));
+            this.files.push(new File(file, this.project));
         }
-    });
+    }.bind(this));
     this.toString = function(){
         return this.name;
     }
