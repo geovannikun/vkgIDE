@@ -3,7 +3,8 @@
     <head>
         <title>vkgIDE</title>
         <meta charset="utf-8">
-        <script>//node imports
+        <script>
+            //node imports
             var fs = require('fs');
             var mime = require('mime');
         </script>
@@ -202,7 +203,7 @@
                 $("#np-folder").val("");
             }
             function start(){
-                ide = new vkgIDE(require('nw.gui').Window.get(), document.body, document.getElementById("archives"));
+                ide = new vkgIDE(require('nw.gui').Window.get(), document.getElementById("right-panel"), document.getElementById("archives"));
                 ide.loadProjects();
                 ide.start();
                 for(var i=0,j=CodeMirror.modeInfo.length;i<j;i++){
@@ -221,56 +222,16 @@
                 });
             }
         </script>
-        <link rel="stylesheet" href="css/tree.css">
         <link rel="stylesheet" href="lib/codemirror.css">
         <link rel="stylesheet" href="addon/hint/show-hint.css">
         <link rel="stylesheet" href="theme/ambiance_g.css">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/tree.css">
         <link rel="stylesheet" href="css/global.css">
     </head>
     <body onload="start()">
-        <header class='titlebar' style="-webkit-app-region: drag">
-            <ul id='opened-files'>
-                <li class="selected" onclick="selectFile()">File 1 ⊗</li>
-                <li onclick="selectFile()">File 2 ⊗</li>
-                <li onclick="selectFile()">File 3 ⊗</li>
-            </ul>
-            <ul id='window-buttons'>
-                <li onclick="ide.window.close()">×</li>
-            </ul>
-            <div id="user-config"><img src="http://www.gravatar.com/avatar/a531fb36a1f9540c8c9b5b9535dd131b&s=200">User Name</div>
-        </header>
-        
-        <ul id='code-config'>
-            <li class='cc-language cc-cf' onclick="showLanguages()">
-                <p>Plain Text</p>
-                <ul id='cc-languages' class="disable">
-                </ul>
-            </li>
-            <li class='cc-indent cc-cf' onclick="showIndent()">
-                <p>4 Spaces</p>
-                <ul id='cc-indent' class="disable">
-                    <li onclick="setIndent()">Size <input onkeyup="setIndent()" type="text" value="4"></li>
-                    <li onclick="setIndent()"><input id='tab' type="radio" name="indent" value="tab"><label for="tab">Tab</label><input id='space' type="radio" name="indent" value="space" checked><label for="space">Space</label></li>
-                </ul>
-            </li>
-            <li class='cc-fontSize cc-cf' onclick="showFontSize()">
-                <p>Indent</p>
-                <ul id='cc-fontSize' class="disable">
-                    <button onclick="downFontSize()">-</button>
-                    <p>Font: 11pt</p>
-                    <button onclick="upFontSize()">+</button>
-                </ul>
-            </li>
-            <li class='cc-wrap cc-cf' onclick="showWrap()">
-                <p>Wraper</p>
-                <ul id='cc-wrap' class="disable">
-                    <li><p onclick="setWrap()">No Wrap</p></li>
-                </ul>
-            </li>
-        </ul>
-        <div id='archive-menu'>
-            <span class='selectProject'>
+        <div id='left-panel' class='show'>
+            <span id='select-project'>
                 <p>Projeto Selecionado</p>
                 <ul id='projects' class='projects'>
                     <li class="newProject" onclick="dialogOpen()">New Project...</li>
@@ -280,32 +241,79 @@
             </span>
             <ul id='archives' class='tree-js'>
             </ul>
+            <ul id="activities">
+            </ul>
         </div>
-        <div id='content'>
-            <div id='new-project' class='window panel panel-default'>
-                <div class='panel-heading'>
-                    Create Project
-                    <button type="button" class="close" data-dismiss="alert" onclick="dialogClose()">×</button>
-                </div>
-                <div class="panel-body">
-                    <div class='input-group'>
-                        <span class="input-group-addon">Name</span>
-                        <input type='text' id='np-name' class="form-control" placeholder="Name"></div>
-                    <div class='input-group'>
-                        <span class="input-group-addon">Folder</span>
-                        <input type='text' id='np-folder' class="form-control" placeholder="Folder">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="selectNPFolder();">Select</button>
-                        </span>
+        <div id="right-panel" class="normal">
+            <!-- HEADER -->
+            <header style="-webkit-app-region: drag">
+                <ul id='opened-files'>
+                    <li class="selected" onclick="selectFile()">File 1 ⊗</li>
+                    <li onclick="selectFile()">File 2 ⊗</li>
+                    <li onclick="selectFile()">File 3 ⊗</li>
+                </ul>
+                <ul id='window-buttons'>
+                    <li onclick="ide.window.close()">×</li>
+                </ul>
+                <div id="user-config"><img src="http://www.gravatar.com/avatar/a531fb36a1f9540c8c9b5b9535dd131b&s=200">User Name</div>
+            </header>
+            
+            <!-- CODE CONFIGURATION -->
+            <ul id='code-config'>
+                <li class='cc-language cc-cf' onclick="showLanguages()">
+                    <p>Plain Text</p>
+                    <ul id='cc-languages' class="disable">
+                    </ul>
+                </li>
+                <li class='cc-indent cc-cf' onclick="showIndent()">
+                    <p>4 Spaces</p>
+                    <ul id='cc-indent' class="disable">
+                        <li onclick="setIndent()">Size <input onkeyup="setIndent()" type="text" value="4"></li>
+                        <li onclick="setIndent()"><input id='tab' type="radio" name="indent" value="tab"><label for="tab">Tab</label><input id='space' type="radio" name="indent" value="space" checked><label for="space">Space</label></li>
+                    </ul>
+                </li>
+                <li class='cc-fontSize cc-cf' onclick="showFontSize()">
+                    <p>Indent</p>
+                    <ul id='cc-fontSize' class="disable">
+                        <button onclick="downFontSize()">-</button>
+                        <p>Font: 11pt</p>
+                        <button onclick="upFontSize()">+</button>
+                    </ul>
+                </li>
+                <li class='cc-wrap cc-cf' onclick="showWrap()">
+                    <p>Wraper</p>
+                    <ul id='cc-wrap' class="disable">
+                        <li><p onclick="setWrap()">No Wrap</p></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- CODE -->
+            <div id='content'>
+                <div id='new-project' class='window panel panel-default'>
+                    <div class='panel-heading'>
+                        Create Project
+                        <button type="button" class="close" data-dismiss="alert" onclick="dialogClose()">×</button>
                     </div>
-                    <div class='input-group'>
-                        <span class="input-group-addon">Type</span>
-                        <div id="np-type" class="form-control"></div>
+                    <div class="panel-body">
+                        <div class='input-group'>
+                            <span class="input-group-addon">Name</span>
+                            <input type='text' id='np-name' class="form-control" placeholder="Name"></div>
+                        <div class='input-group'>
+                            <span class="input-group-addon">Folder</span>
+                            <input type='text' id='np-folder' class="form-control" placeholder="Folder">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="selectNPFolder();">Select</button>
+                            </span>
+                        </div>
+                        <div class='input-group'>
+                            <span class="input-group-addon">Type</span>
+                            <div id="np-type" class="form-control"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-footer btn-group btn-group-justified">
-                    <buttom class='cancel btn btn-default' onclick='npClose()'>Cancel</buttom>
-                    <buttom class='do btn btn-primary' onclick="newProject($('#np-name').val(),$('#np-folder').val(),$('#np-type').data('ddslick').selectedData.value)">Make</buttom>
+                    <div class="panel-footer btn-group btn-group-justified">
+                        <buttom class='cancel btn btn-default' onclick='npClose()'>Cancel</buttom>
+                        <buttom class='do btn btn-primary' onclick="newProject($('#np-name').val(),$('#np-folder').val(),$('#np-type').data('ddslick').selectedData.value)">Make</buttom>
+                    </div>
                 </div>
             </div>
         </div>

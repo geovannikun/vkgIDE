@@ -42,7 +42,7 @@
 
 /* Editor styling */
 
-.cm-s-ambiance.CodeMirror {
+.cm-s-ambiance.CodeMirror, li.selected {
     font-family: "Ubuntu Mono", monospace !important;
     color: #696969;
     background-color: #f3f3f3;
