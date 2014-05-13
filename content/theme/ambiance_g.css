@@ -1,14 +1,6 @@
 /* ambiance theme for codemirror */
 
 /* Color scheme */
-
-@font-face {
-  font-family: 'Ubuntu Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(UbuntuMono-Regular.woff) format('woff');
-}
-
 .cm-s-ambiance span.cm-meta {color: #FF1717;}
 .cm-s-ambiance span.cm-keyword {font-weight: bold; color: #7F0055; }
 .cm-s-ambiance span.cm-atom {color: #219;}
