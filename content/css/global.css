@@ -1,3 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Poiret+One);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
 body{
     position: relative;
     top: 0px;
@@ -7,6 +10,8 @@ body{
     width: 100%;
     height: 100%;
     background: white;
+    font-family: arial;
+    font-size: 10pt;
 }
 
 #left-panel{
@@ -14,7 +19,7 @@ body{
     top: 0px;
     bottom: 0px;
     left: 0px;
-    border: 1px solid #2c3e50;
+    border: 1px solid #2c2c2c;
     box-sizing: border-box;
     height: 100%;
     border-right: 0px solid #fff;
@@ -37,7 +42,6 @@ body{
 #left-panel > #select-project{
     width: 100%;
     position: absolute;
-    font-family: "Ubuntu Mono", monospace !important;
 }
 
 #left-panel > #select-project > p{
@@ -45,18 +49,22 @@ body{
     width: 100%;
     height: 45px;
     box-sizing: border-box;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #b5b5b5;
     background: #333;
     text-align: center;
     line-height: 45px;
     vertical-align: middle;
-    color: white;
+    font-family: 'Poiret One', cursive !important;
+    font-weight: bold;
+    font-size: 12pt;
+    color: #f3f3f3;
     z-index: 2;
+    cursor: default;
     transition: box-shadow .5s;
 }
 
 #left-panel > #select-project:hover > p{
-    box-shadow: 0px 0px 5px #333;
+    box-shadow: 0px 0px 15px #333;
 }
 
 #left-panel > #select-project > .projects{
@@ -91,7 +99,8 @@ body{
     height: 55px;
     width: 100%;
     bottom: 0px;
-    border-top: 1px solid black;
+    border-top: 1px solid #444;
+    box-shadow: 0px 10px 50px #060606;
     background: #333;
 }
 
@@ -120,8 +129,10 @@ body{
     box-sizing: border-box;
     height: 45px;
     width: 100%;
-    font-family: "Ubuntu Mono", monospace !important;
+    font-family: arial;
+    font-size: 10pt;
     background: white;
+    color: #696969;
 }
 
 #right-panel > header > #opened-files{
@@ -142,12 +153,27 @@ body{
     cursor: default;
 }
 
-#right-panel > header > #opened-files > li:hover > span{
-    color: #c0392b;
+#right-panel > header > #opened-files > li > span{
+    display: inline-block;
+    font-size: 10pt;
+    margin-left: 10px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+#right-panel > header > #opened-files > li > span:hover{
+    color: white;
+    background: #b5b5b5;
+    font-weight: bold;
 }
 
 #right-panel > header > #opened-files > li.selected{
     height: calc(100% + 1px);
+    font-family: arial!important;
+    font-weight: bold;
 }
 
 #right-panel > header > #user-config{
@@ -199,27 +225,68 @@ body{
 
 #right-panel > #code-config{
     position: fixed;
-    width: 65px;
+    width: 85px;
     top:55px;
-    right: 10px;
+    right: -50px;
+    z-index: 1;
+    transition: .2s right;
+}
+
+#right-panel > #code-config:hover{
+    position: fixed;
+    width: 85px;
+    top:55px;
+    right: 0px;
     z-index: 1;
 }
 
 #right-panel > #code-config > .cc-cf{
     border: 1px solid #b5b5b5;
     border-radius: 50%;
-    width: 55px;
-    height: 55px;
+    width: 70px;
+    height: 70px;
     box-sizing: border-box;
-    margin: 5px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #696969;
+    line-height: 70px;
+    vertical-align: middle;
+    text-align: center;
+    margin: 15px;
 }
 
 #right-panel > #code-config > .cc-cf > p{
     text-align: center;
     border-radius: 50%;
-    width: 55px;
-    height: 55px;
+    width: 100%;
+    height: 100%;
+    font-size: 11pt;
     vertical-align: middle;
+    cursor: default;
+    background: white;
+}
+
+#right-panel > #code-config > .cc-cf > ul{
+    position: absolute;
+    background: white;
+    border: 1px solid #b5b5b5;
+    right: 80px;
+    width: 200px;
+    margin-top: -50px;
+    float: left;
+    max-height: 100%;
+    overflow: auto;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+#right-panel > #code-config > .cc-cf > ul > li{
+    line-height: 35px;
+    text-align: center;
+    cursor: default;
+}
+
+#right-panel > #code-config > .cc-cf > ul > li:hover{
+    background: #f3f3f3;
 }
 
 #right-panel > #code-config > .cc-cf > .disable{
@@ -238,17 +305,154 @@ body{
     height: calc(100% - 45px);
 }
 
+.window{
+    z-index: 999;
+    position: fixed;
+    left: 30%;
+    right: 30%;
+    top: 20%;
+    background: white;
+    box-shadow: 0px 0px 15px #696969;
+}
+
+.window > header{
+    color: white;
+    font-weight: bold;
+    line-height: 50px;
+    padding-left: 10px;
+    vertical-align: middle;
+    background: #2980B9;
+    border-bottom: 3px solid #2574A9;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14pt;
+}
+
+.window > header > .close{
+    background: transparent;
+    float: right;
+    color: white;
+    border: 0px solid transparent;
+    font-size: 16pt;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.window > header > .close:hover{
+    color: #f3f3f3;
+}
+
+.window > section{
+    box-sizing: border-box;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.window > section button{
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid #b5b5b5;
+    color: #696969;
+    background: #f3f3f3;
+    box-sizing: border-box;
+    padding: 0px;
+}
+
+.window > footer{
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    vertical-align: middle;
+    background: #f3f3f3;
+    border-top: 1px solid #b5b5b5;
+    box-sizing: border-box;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 12pt;
+}
+
+.window > footer > buttom{
+    display: inline-block;
+    width: calc(50% - 14px);
+    margin: 5px;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    background: #2980B9;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+}
+
+.input-group{
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.input-group > .input-group-addon{
+    display: inline-block;
+    width: 18%;
+    box-sizing: border-box;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    float: left;
+    color: #696969;
+    font-size: 10pt;
+}
+
+.input-group > input{
+    width: 80%;
+}
+
+#np-folder{
+    width: calc(80% - 65px);
+}
+
+#np-type{
+    display: inline-block;
+}
+
+#np-type > .dd-select, #np-type > .dd-options{
+    width: 100%!important;
+}
+
+input{
+    outline: none;
+    display: inline-block;
+    border: 1px solid #b5b5b5;
+    margin: 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
 .hidden{
     display: none;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+    width: 5px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-track-piece {
     background-color: #f3f3f3;
+    padding: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
@@ -260,8 +464,8 @@ body{
 }
 
 @font-face {
-  font-family: 'Ubuntu Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(UbuntuMono-Regular.woff) format('woff');
+    font-family: 'Ubuntu Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(UbuntuMono-Regular.woff) format('woff');
 }

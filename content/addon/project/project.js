@@ -103,7 +103,7 @@ function Folder(path,project){
         var label = document.createElement("label");
         label.htmlFor = "fld-"+this.path+this.name;
         label.innerHTML = this.name;
-        var filet = document.createElement("li");
+        var filet = document.createElement("ul");
         this.files.forEach(function(file){
             filet.appendChild(file.getHTML());
         });

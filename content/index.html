@@ -216,7 +216,7 @@
                 
                 $('#np-type').ddslick({
                     data:ddData,
-                    width:388,
+                    width:"80%",
                     selectText: "Select your project type",
                     imagePosition:"right"
                 });
@@ -235,8 +235,6 @@
                 <p>Projeto Selecionado</p>
                 <ul id='projects' class='projects'>
                     <li class="newProject" onclick="dialogOpen()">New Project...</li>
-                    <li>Projeto 1</li>
-                    <li>Projeto 2</li>
                 </ul>
             </span>
             <ul id='archives' class='tree-js'>
@@ -248,9 +246,9 @@
             <!-- HEADER -->
             <header style="-webkit-app-region: drag">
                 <ul id='opened-files'>
-                    <li class="selected" onclick="selectFile()">File 1 <span>⊗</span></li>
-                    <li onclick="selectFile()">File 2 <span>⊗</span></li>
-                    <li onclick="selectFile()">File 3 <span>⊗</span></li>
+                    <li class="selected" onclick="selectFile()">File 1 <span>×</span></li>
+                    <li onclick="selectFile()">File 2 <span>×</span></li>
+                    <li onclick="selectFile()">File 3 <span>×</span></li>
                 </ul>
                 <ul id='window-buttons'>
                     <li onclick="ide.window.close()">×</li>
@@ -287,35 +285,31 @@
                     </ul>
                 </li>
             </ul>
-            <!-- CODE -->
-            <div id='content'>
-                <div id='new-project' class='window panel panel-default'>
-                    <div class='panel-heading'>
-                        Create Project
-                        <button type="button" class="close" data-dismiss="alert" onclick="dialogClose()">×</button>
-                    </div>
-                    <div class="panel-body">
-                        <div class='input-group'>
-                            <span class="input-group-addon">Name</span>
-                            <input type='text' id='np-name' class="form-control" placeholder="Name"></div>
-                        <div class='input-group'>
-                            <span class="input-group-addon">Folder</span>
-                            <input type='text' id='np-folder' class="form-control" placeholder="Folder">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="selectNPFolder();">Select</button>
-                            </span>
-                        </div>
-                        <div class='input-group'>
-                            <span class="input-group-addon">Type</span>
-                            <div id="np-type" class="form-control"></div>
-                        </div>
-                    </div>
-                    <div class="panel-footer btn-group btn-group-justified">
-                        <buttom class='cancel btn btn-default' onclick='npClose()'>Cancel</buttom>
-                        <buttom class='do btn btn-primary' onclick="newProject($('#np-name').val(),$('#np-folder').val(),$('#np-type').data('ddslick').selectedData.value)">Make</buttom>
-                    </div>
+        </div>
+        <div id='new-project' class='window'>
+            <header>
+                Create Project
+                <button type="button" class="close" data-dismiss="alert" onclick="dialogClose()">×</button>
+            </header>
+            <section>
+                <div class='input-group'>
+                    <span class="input-group-addon">Name</span>
+                    <input type='text' id='np-name' class="form-control" placeholder="Name">
                 </div>
-            </div>
+                <div class='input-group'>
+                    <span class="input-group-addon">Folder</span>
+                    <input type='text' id='np-folder' class="form-control" placeholder="Folder">
+                    <button type="button" onclick="selectNPFolder();">Select</button>
+                </div>
+                <div class='input-group'>
+                    <span class="input-group-addon">Type</span>
+                    <div id="np-type" class="form-control"></div>
+                </div>
+            </section>
+            <footer>
+                <buttom class='cancel btn btn-default' onclick='npClose()'>Cancel</buttom>
+                <buttom class='do btn btn-primary' onclick="newProject($('#np-name').val(),$('#np-folder').val(),$('#np-type').data('ddslick').selectedData.value)">Make</buttom>
+            </footer>
         </div>
         <input id='choose-directory' class='hidden' type="file" nwdirectory />
         <input id='choose-file' class='hidden' type="file"/>
